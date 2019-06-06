@@ -1,0 +1,39 @@
+usrutils
+========
+
+
+Description
+-----------
+
+Collection of unrelated utility scripts.
+
+
+Installation
+------------
+
+Requirements:
+
+ - Bash compatible shell
+
+
+Contributing
+------------
+
+Open an issue or send a pull request on the Github
+(http://github.com/loonies/usrutils).
+
+
+Authors
+-------
+
+Maintainer:
+
+ - Miodrag Tokić
+
+
+Copyright
+---------
+
+Copyright (C) 2018-2019 Miodrag Tokić.
+
+Released under the MIT License. See the LICENSE file for details.
