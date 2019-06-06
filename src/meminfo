@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+# meminfo
+#
+# Displays percentage of used or free memory
+#
+# Copyright (C) 2018-2019 Miodrag Tokić
+# Released under the MIT License.
+
+set -o nounset
+
+readonly VERSION="0.2.0"
+
+readonly EXIT_SUCCESS=0
+readonly EXIT_EGENERAL=1
+readonly EXIT_EUSER=2
+
+usage() {
+    cat << EOF
+Usage:
+    meminfo [-f]
+    meminfo [-h] [--version]
+
+EOF
+}
+
+help() {
+    usage
+
+    cat << EOF
+Options:
+    -f, --free  Display free instead of used memory
+    -h, --help  Display help message
+    --version   Display version information
+
+EOF
+}
+
+version() {
+    cat << EOF
+meminfo version $VERSION
+
+Copyright (C) 2017-2019 Miodrag Tokić.
+Released under the MIT License.
+
+EOF
+}
+
+mem_used() {
+    # used + buff/cache / total
+    echo $(free | grep Mem | awk '{ printf("%i", ($3 + $6) / $2 * 100) }')
+}
+
+mem_free() {
+    # free / total
+    echo $(free | grep Mem | awk '{ printf("%i", $4 / $2 * 100) }')
+}
+
+main() {
+    if [[ $# -lt 1 ]]; then
+        echo "$(mem_used)%"
+        exit $EXIT_SUCCESS
+    fi
+
+    while test $# != 0; do
+        case "$1" in
+            -f|--free)
+                echo "$(mem_free)%"
+                exit $EXIT_SUCCESS
+                ;;
+            -h|--h|--he|--hel|--help)
+                help
+                exit $EXIT_SUCCESS
+                ;;
+            --version)
+                version
+                exit $EXIT_SUCCESS
+                ;;
+            -*)
+                echo "Unknown option: $1"
+                usage
+                exit $EXIT_EUSER
+                ;;
+        esac
+
+        shift
+    done
+}
+
+main "$@"
