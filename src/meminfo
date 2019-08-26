@@ -47,8 +47,8 @@ EOF
 }
 
 mem_used() {
-    # used + buff/cache / total
-    echo $(free | grep Mem | awk '{ printf("%i", ($3 + $6) / $2 * 100) }')
+    # used / total
+    echo $(free | grep Mem | awk '{ printf("%i", $3 / $2 * 100) }')
 }
 
 mem_free() {
